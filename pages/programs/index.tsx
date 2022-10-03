@@ -3,9 +3,12 @@ import Head from 'next/head';
 import { AppLayout } from '../../components';
 import React from "react";
 import {ProgramsList} from "../../components";
+import { getLessons } from '../../helpers';
+import { LessonProps } from '../../types';
 
 
-const Home: NextPage = () => {
+const Programs: NextPage<LessonProps> = ({ lessons }) => {
+	console.log({lessons})
 	return (
 		<AppLayout>
 			<div className="container md:px-16 lg:px-28">
@@ -13,10 +16,18 @@ const Home: NextPage = () => {
 					<title>Sonr Learn | Tutorials</title>
 				</Head>
 
-				<ProgramsList />
+				<ProgramsList lessons={lessons} />
 			</div >
 		</AppLayout>
 	);
 };
 
-export default Home;
+export default Programs;
+
+export const getStaticProps = async () => {
+	return {
+		props: {
+			lessons: await getLessons('programs'),
+		},
+	}
+}

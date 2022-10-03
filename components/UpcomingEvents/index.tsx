@@ -1,5 +1,5 @@
 import styles from './styles.module.css';
-import {events} from "../../data";
+import {events} from "../../__mock__";
 import {EventCard} from "../Shared";
 import React from "react";
 

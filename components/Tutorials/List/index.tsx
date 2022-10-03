@@ -1,15 +1,17 @@
 import React from "react";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import Head from 'next/head';
 import styles from './styles.module.css';
-import {Button, Image, TutorialCard, EventCard, Tag} from "../../";
-import {ArrowCircleRight, BannerIcon, Consensus, Star} from "../../../assets";
-import {tutorials, events} from "../../../data";
-import {UpcomingEvents} from "../../UpcomingEvents";
-import {SuggestedTutorials} from "../../SuggestedTutorials";
+import { Button, Image, TutorialCard, EventCard, Tag } from "../../";
+import { ArrowCircleRight, BannerIcon, Consensus, Star } from "../../../assets";
+import { tutorials, events } from "../../../__mock__";
+import { UpcomingEvents } from "../../UpcomingEvents";
+import { SuggestedTutorials } from "../../SuggestedTutorials";
+import { Lesson, LessonProps, LessonTrackMap } from "../../../types";
 
-const TutorialsList = () => {
+const TutorialsList: React.FC<LessonProps> = ({ lessons }) => {
 	const { push } = useRouter();
+	const latestTutorial: Lesson = lessons[0];
 
 
 	return (
@@ -22,10 +24,10 @@ const TutorialsList = () => {
 					<h1>Welcome to a community oriented educational content for
 						Developers in the Sonr Ecosystem</h1>
 					<Button className="mt-20 md:mt-10">
-							<span className="flex items-center">
-								<Star />
-								<span className="ml-2">Introduction to Decentralization</span>
-							</span>
+						<span className="flex items-center">
+							<Star />
+							<span className="ml-2">Introduction to Decentralization</span>
+						</span>
 					</Button>
 				</div>
 				<div className="absolute">
@@ -45,20 +47,20 @@ const TutorialsList = () => {
 								<Tag text="Blockchain" color="secondary" />
 								<Tag text="Tutorial" color="tertiary" />
 							</div>
-							<h3>Building a consensus algorithm on Sonr blockchain</h3>
+							<h3>{latestTutorial?.frontMatter?.title}</h3>
 							<span className={`mt-5 ${styles["sub-text"]}`}>5mins Read</span>
 							<div className={`${styles["description"]} mt-auto flex items-center`}>
-									<span className="flex items-center">
-										<span className={`${styles["avatar"]} mr-3`}>IP</span>
-										Ian Perez
-									</span>
+								<span className="flex items-center">
+									<span className={`${styles["avatar"]} mr-3`}>IP</span>
+									Ian Perez
+								</span>
 								<span className="ml-auto">28th June, 2022</span>
 							</div>
 						</div>
 						<div className="flex flex-col items-center justify-center ml-auto">
-								<span className={styles["arrow-container"]}>
-									<ArrowCircleRight />
-								</span>
+							<span className={styles["arrow-container"]}>
+								<ArrowCircleRight />
+							</span>
 							<strong className="text-blue-500 font-thicccboi-bold cursor-pointer">Read</strong>
 						</div>
 					</div>
@@ -66,11 +68,14 @@ const TutorialsList = () => {
 			</section>
 			<hr className="my-10 md:my-20" />
 
-			<SuggestedTutorials header="Best contents curated for you, dive in to learning about the decentralized web today." />
+			<SuggestedTutorials
+				header="Best contents curated for you, dive in to learning about the decentralized web today."
+				lessons={lessons}
+			/>
 
 			<UpcomingEvents />
 		</div >
 	);
 };
 
-export {TutorialsList};
+export { TutorialsList };

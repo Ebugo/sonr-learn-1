@@ -7,9 +7,62 @@ import {Button, Image, Input} from "../../Shared";
 import {CodeBlock, Star, TutorialAccess} from "../../../assets";
 import React from "react";
 import Link from "next/dist/client/link"
+import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 
 
-const ProgramsDetail = () => {
+const components: any = {
+	// code: (props: any) => {
+	// 	const [, language] =
+	// 		(props.className as string)?.match(/language-(\w+)/) ?? []
+
+	// 	if (language) {
+	// 		return (
+	// 			<Box position="relative">
+	// 				<SyntaxHighlighter language={language} {...props} style={dracula} />
+	// 				<CopyToClipboard {...props} />
+	// 			</Box>
+	// 		)
+	// 	}
+
+	// 	return <Code fontSize="md" wordBreak="break-all" {...props} />
+	// },
+	h1: (props: any) => (
+		<h1 className="pb-4" {...props} />
+		// <Heading as="h1" apply="mdx.h1" fontSize="4xl" {...props} />
+	),
+	h2: (props: any) => (
+		<h2 {...props} />
+		// <Heading as="h2" apply="mdx.h2" fontSize="3xl" {...props} />
+	),
+	h3: (props: any) => (
+		<h3 {...props} />
+		// <Heading as="h3" apply="mdx.h3" fontSize="2xl" {...props} />
+	),
+	h4: (props: any) => (
+		<h4 {...props} />
+		// <Heading as="h4" apply="mdx.h4" fontSize="xl" {...props} />
+	),
+	p: (props: any) => (
+		<p {...props} />
+		// <Text as="p" apply="mdx.p" fontSize="xl" {...props} />
+	),
+	a: (props: any) =>  (
+		<a {...props} />
+		// <Text as="a" apply="mdx.a" {...props} />
+	),
+	ul: (props: any) =>  (
+		<ul {...props} />
+		// <Text as="ul" apply="mdx.ul" fontSize="xl" {...props} />
+	),
+	// img: (props: any) => (
+	// 	<Image as="img" apply="mdx.image" m="0 auto" alt="" {...props} />
+	// ),
+	// ContentSideDrawer,
+	// ContentCallout,
+}
+
+
+const ProgramsDetail: React.FC<{ mdxSource: MDXRemoteSerializeResult }> = ({ mdxSource }) => {
 	return (
 		<div className={`${styles["container"]} pb-20`}>
 			<section className="flex-grow">
@@ -74,6 +127,9 @@ const ProgramsDetail = () => {
 					<div className={styles["image-container"]}>
 						<Image src={TutorialAccess} width={960} height={457} />
 					</div>
+
+
+					{/* <MDXRemote {...mdxSource} components={components} /> */}
 
 					<h2 id="initial" className="mt-10 mb-5">Initial Setup</h2>
 					<h6>Sign up to sonr beam</h6>

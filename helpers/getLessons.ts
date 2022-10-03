@@ -3,17 +3,17 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-export const getLessons = async(type: 'tutorials' | 'programs' = 'tutorials') => {
+export const getLessons = async(topic: 'tutorials' | 'programs' = 'tutorials') => {
     const lessons: Lesson[] = []
-	fs.readdirSync(path.join('lessons', type)).map((file) => {
+	fs.readdirSync(path.join('lessons', topic)).map((file) => {
 		const markdownWithMeta = fs.readFileSync(
-			path.join('lessons', type, file),
+			path.join('lessons', topic, file),
 			'utf-8',
 		)
 
 		const { data: frontMatter } = matter(markdownWithMeta)
 		lessons.push({
-			path: type,
+			path: topic,
 			frontMatter,
 			slug: `${file.replace('.mdx', '')}`,
 		})

@@ -15,7 +15,7 @@ export interface LessonTrackMap {
 }
 
 
-export interface LessonProps {
+export interface LessonDetailProps {
     frontMatter: object
     mdxSource: MDXRemoteSerializeResult
     slug: string

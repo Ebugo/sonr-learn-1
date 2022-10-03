@@ -3,7 +3,7 @@
 import React from "react";
 import styles from "./styles.module.css";
 import {Image} from "../Image";
-import {ArrowCircleRight, Consensus} from "../../../assets";
+import {ArrowCircleRight, Consensus, Program1} from "../../../assets";
 import {Tag} from "../Tag";
 import {Button} from "../Button";
 import {useRouter} from "next/router";
@@ -14,11 +14,13 @@ interface Props {
   desc: string;
   image: any;
   id: number;
-  tags?: string[]
+  tags?: string[];
+  date?: string;
+  slug: string;
 }
 
 
-const ProgramCard: React.FC<Props> = ({ title, header, desc, image, id }) => {
+const ProgramCard: React.FC<Props> = ({ title, header, desc, image, id, date, slug }) => {
   const { push } = useRouter();
 
 
@@ -27,7 +29,7 @@ const ProgramCard: React.FC<Props> = ({ title, header, desc, image, id }) => {
           <h3 className="py-8">{title}</h3>
           <div className={`${styles["program-body"]} flex flex-col md:flex-row`}>
             <div>
-              <Image src={image} width={582} height={470} />
+            {/* <Image src={image[0] || Program1} width={582} height={470} /> */}
             </div>
             <div className="flex-grow flex flex-col md:flex-row p-5 xl:p-16">
               <div className="flex flex-col">
@@ -41,7 +43,7 @@ const ProgramCard: React.FC<Props> = ({ title, header, desc, image, id }) => {
                 <div className="py-10">
                   <Button
                       className="px-5"
-                      onClick={() => push(`/programs/${id}`)}
+                      onClick={() => push(`/programs/${slug}`)}
                   >
                     <span>Start Learning</span>
                   </Button>

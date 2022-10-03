@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from './index.module.css';
-import {AppLayout, Button, Image, Input, Tag, TechCard} from "../components";
+import { AppLayout, Button, Image, Input, Tag, TechCard } from "../components";
 import {
 	ArrowCircleRight, ArrowRight,
 	Award,
@@ -15,13 +15,15 @@ import {
 	Screenshot2, Star,
 	Zkp
 } from "../assets";
-import {tutorials, events} from "../data";
-import React, {createRef, Ref, useEffect, useState} from "react";
-import {useRouter} from "next/router";
-import {UpcomingEvents} from "../components/UpcomingEvents";
-import {SuggestedTutorials} from "../components/SuggestedTutorials";
+import { tutorials, events } from "../__mock__";
+import React, { createRef, Ref, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { UpcomingEvents } from "../components/UpcomingEvents";
+import { SuggestedTutorials } from "../components/SuggestedTutorials";
 import FlickityComponent from 'react-flickity-component';
 import "flickity/css/flickity.css";
+import { getLessons } from '../helpers';
+import { LessonProps } from '../types';
 
 const flickityOptions = {
 	// initialIndex: 0,
@@ -37,7 +39,7 @@ const flickityOptions = {
 };
 
 
-const Home: NextPage = () => {
+const Home: NextPage<LessonProps> = ({ lessons }) => {
 	//state management
 	const [activeTechCard, setActiveTechCard] = useState(0);
 
@@ -75,16 +77,16 @@ const Home: NextPage = () => {
 	]
 
 	//Handler
-	function handleTechsToggle () {
+	function handleTechsToggle() {
 		// clearInterval(toggle);
 		let nextCard = activeTechCard + 1;
-		if(nextCard > technologies.length - 1) {
+		if (nextCard > technologies.length - 1) {
 			nextCard = 0;
 		}
-		toggle = setTimeout(()=>setActiveTechCard(nextCard), 2000)
-		;
+		toggle = setTimeout(() => setActiveTechCard(nextCard), 2000)
+			;
 	}
-	
+
 	const handleToggle = (cardIndex: number) => {
 		setActiveTechCard(cardIndex);
 		clearTimeout(toggle);
@@ -99,7 +101,7 @@ const Home: NextPage = () => {
 	};
 
 
-	useEffect(()=>{
+	useEffect(() => {
 		handleTechsToggle();
 	}, [activeTechCard])
 
@@ -163,7 +165,7 @@ const Home: NextPage = () => {
 								<h3 className="mb-10">Learn about the different tools and technologies in the Sonr Ecosystem</h3>
 
 								<div className={`${styles["tutorials-sample-control"]} flex flex-wrap xl:flex-col mb-10 xl:mb-0`}>
-									{technologies.map(({ title, desc, icon}, i) => (
+									{technologies.map(({ title, desc, icon }, i) => (
 										<TechCard
 											id={i}
 											key={i}
@@ -209,29 +211,29 @@ const Home: NextPage = () => {
 									<span className="ml-2">Become a Certified Sonr Developer</span>
 								</span>
 							</Button>
-							<div className={styles["icon-container"]}><Award/></div>
+							<div className={styles["icon-container"]}><Award /></div>
 							<h5 className="mt-5 mb-2">Sonr Certification - <span>Missions</span></h5>
-							<p>This is a learning journey that affords you a defined scope of learning while you build a project as you learn. <br/>
-								You start from basic blockchain courses and dive deeper into the Sonr Ecosystem. <br/>
+							<p>This is a learning journey that affords you a defined scope of learning while you build a project as you learn. <br />
+								You start from basic blockchain courses and dive deeper into the Sonr Ecosystem. <br />
 								You get certified and receive a reward in form(token, Non-fungible tokens, NFT or monetary).</p>
 							<div className="mt-5 md:mt-10 flex gap-5 flex-col md:flex-row">
-								<span className="flex items-center gap-2"><Box/> Introductory Blockchain Developer Certification</span>
-								<span className="flex items-center gap-2"><Box/> Intermediate Sonr Developer Certification</span>
-								<span className="flex items-center gap-2"><Box/> Master Sonr Developer Certification</span>
+								<span className="flex items-center gap-2"><Box /> Introductory Blockchain Developer Certification</span>
+								<span className="flex items-center gap-2"><Box /> Intermediate Sonr Developer Certification</span>
+								<span className="flex items-center gap-2"><Box /> Master Sonr Developer Certification</span>
 							</div>
 						</div>
 
 						<div className="col-span-2 md:col-span-1 px-5 md:px-10 py-8 md:py-14 bg-red-500">
-							<div className={styles["icon-container"]}><Book/></div>
+							<div className={styles["icon-container"]}><Book /></div>
 							<h5 className="mt-2 mb-5 md:mt-5 md:mb-10">Tutorials</h5>
-							<p>&quot;Show me the concept in codes&quot; kind of learning. <br/>
+							<p>&quot;Show me the concept in codes&quot; kind of learning. <br />
 								This involves building basic projects illustrating a particular
 								concept in the Sonr Ecosystem.</p>
 						</div>
 						<div className="col-span-2 md:col-span-1 px-5 md:px-10 py-8 md:py-14 bg-green-500 relative">
-							<Learn/>
-							<Build/>
-							<div className={styles["icon-container"]}><Grid/></div>
+							<Learn />
+							<Build />
+							<div className={styles["icon-container"]}><Grid /></div>
 							<h5 className="mt-2 mb-5 md:mt-5 md:mb-10">Hackathons</h5>
 							<p>This includes online and offline Hackathons organized for
 								developers in different regions across the globe.</p>
@@ -239,7 +241,10 @@ const Home: NextPage = () => {
 					</div>
 				</section>
 
-				<SuggestedTutorials header="All things Decentralization, Building in an IBC enabled chain, and the future of the web." />
+				<SuggestedTutorials
+					header="All things Decentralization, Building in an IBC enabled chain, and the future of the web."
+					lessons={lessons}
+				/>
 
 				<section className={`container ${styles["community-container"]}`}>
 					<h3 className="my-8 md:my-10">Participate in our community bounty programs</h3>
@@ -252,12 +257,12 @@ const Home: NextPage = () => {
 							disableImagesLoaded={false} // default false
 							reloadOnUpdate // default false
 							static={true}
-							>
+						>
 							{
-								[1,2,3,4,5,6,7,8,9].map((community, i)=>(
+								[1, 2, 3, 4, 5, 6, 7, 8, 9].map((community, i) => (
 									<div
 										key={i}
-										className={`${styles["image-container"]} ${i<=8 && " pr-5 "}`}
+										className={`${styles["image-container"]} ${i <= 8 && " pr-5 "}`}
 									>
 										<Image
 											height={290}
@@ -291,3 +296,11 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getStaticProps = async () => {
+	return {
+		props: {
+			lessons: await getLessons('tutorials'),
+		},
+	}
+}

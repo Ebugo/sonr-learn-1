@@ -4,22 +4,14 @@ import Head from 'next/head';
 import styles from './styles.module.css';
 import { Button, Image, TutorialCard, EventCard, Tag } from "../../";
 import { ArrowCircleRight, BannerIcon, Consensus, Star } from "../../../assets";
-import { tutorials, events } from "../../../data";
+import { tutorials, events } from "../../../__mock__";
 import { UpcomingEvents } from "../../UpcomingEvents";
 import { SuggestedTutorials } from "../../SuggestedTutorials";
 import { Lesson, LessonProps, LessonTrackMap } from "../../../types";
 
-const TutorialsList: React.FC<LessonProps> = ({ lessons }: { lessons: Lesson[] }) => {
-	const result = lessons.reduce((acc: LessonTrackMap, curr) => {
-		if (!acc[curr.path]) {
-			// initial an array of lessons for a given track
-			acc[curr.path] = []
-		}
-		acc[curr.path].push(curr)
-		return acc
-	}, {})
-
+const TutorialsList: React.FC<LessonProps> = ({ lessons }) => {
 	const { push } = useRouter();
+	const latestTutorial: Lesson = lessons[0];
 
 
 	return (
@@ -55,7 +47,7 @@ const TutorialsList: React.FC<LessonProps> = ({ lessons }: { lessons: Lesson[] }
 								<Tag text="Blockchain" color="secondary" />
 								<Tag text="Tutorial" color="tertiary" />
 							</div>
-							<h3>Building a consensus algorithm on Sonr blockchain</h3>
+							<h3>{latestTutorial?.frontMatter?.title}</h3>
 							<span className={`mt-5 ${styles["sub-text"]}`}>5mins Read</span>
 							<div className={`${styles["description"]} mt-auto flex items-center`}>
 								<span className="flex items-center">
@@ -78,7 +70,7 @@ const TutorialsList: React.FC<LessonProps> = ({ lessons }: { lessons: Lesson[] }
 
 			<SuggestedTutorials
 				header="Best contents curated for you, dive in to learning about the decentralized web today."
-				tutorials={Object.entries(result)}
+				lessons={lessons}
 			/>
 
 			<UpcomingEvents />

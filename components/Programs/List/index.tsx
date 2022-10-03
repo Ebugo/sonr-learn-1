@@ -5,11 +5,11 @@ import styles from './styles.module.css';
 import {Button, ProgramCard} from "../../";
 import {BannerIcon, Star} from "../../../assets";
 import {UpcomingEvents} from "../../UpcomingEvents";
-import {programs} from "../../../data/programs";
+import {programs} from "../../../__mock__/programs";
+import { LessonProps } from "../../../types";
 
-const ProgramsList = () => {
+const ProgramsList: React.FC<LessonProps> = ({ lessons }) => {
 	const { push } = useRouter();
-
 
 	return (
 		<div className={styles["container"]}>
@@ -20,7 +20,7 @@ const ProgramsList = () => {
 				<div className="md:w-4/6">
 					<h1>Learn about Sonr Technologies using a
 						project based learning curriculum</h1>
-					<Button className="mt-20 md:mt-10">
+					<Button className="mt-20 md:mt-10" onClick={()=>push("#start")}>
 							<span className="flex items-center">
 								<Star />
 								<span className="ml-2">Start here, for beginners</span>
@@ -32,11 +32,11 @@ const ProgramsList = () => {
 				</div>
 			</section>
 
-			<section className="py-5 md:py-12">
-				{programs.map(({ title, header, desc, image, tags}, i) => (
+			<section id="start" className="py-5 md:py-12">
+				{lessons.map(({ frontMatter: { title, author, duration, icons, tags, date }, path, slug }, i: number) => (
 					<div key={i}>
-						<ProgramCard title={title} header={header} id={i} image={image} desc={desc} tags={tags} />
-						<hr className={`${i!== programs.length-1 ? "block" : "hidden"} mt-14 mb-5 bg-grey-100`} />
+						<ProgramCard title={title} header={"header"} id={i} image={icons} desc={"desc"} tags={tags} slug={slug} date={date} />
+						<hr className={`${lessons && i!== lessons.length-1 ? "block" : "hidden"} mt-14 mb-5 bg-grey-100`} />
 					</div>
 				))}
 			</section>

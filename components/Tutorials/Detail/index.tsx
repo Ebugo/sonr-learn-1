@@ -8,7 +8,7 @@ import { Tag } from "../../Shared/Tag";
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote'
 
 
-const components = {
+const components: any = {
 	// code: (props: any) => {
 	// 	const [, language] =
 	// 		(props.className as string)?.match(/language-(\w+)/) ?? []
